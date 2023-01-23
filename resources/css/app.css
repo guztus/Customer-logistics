@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-striped tbody tr:nth-child(even) {
+    background-color: #f7fafc;
+}
