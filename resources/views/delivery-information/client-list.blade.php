@@ -11,39 +11,32 @@
 
         let addressList;
 
-        function replaceChilden() {
-            let items = document.getElementsByClassName('addresses');
-            for (let i = items.length - 1; i >= 0; --i) {
-                items[i].remove();
-            }
-        }
-
         function generateDivs() {
-            let items = document.getElementsByClassName('entry-content'), address, tableRow, rowClasses, tdClasses
-            replaceChilden();
-            for (let i = 0; i < items.length; i++) {
-                addressList.forEach(function (item) {
-                    tableRow = document.createElement('tr');
-                    address = document.createElement('td');
+            let itemContainer = document.getElementById('entry-content');
 
-                    rowClasses = ['bg-white','border-b','dark:bg-gray-800','dark:border-gray-700','hover:bg-gray-50', 'dark:hover:bg-gray-600'];
-                    rowClasses.forEach(function (item) {
-                        tableRow.classList.add(item);
-                    })
+            itemContainer.replaceChildren();
+            addressList.forEach(function (item) {
+                let tableRow = document.createElement('tr');
+                let address = document.createElement('td');
 
-                    address.className = 'addresses';
+                let rowClasses = ['bg-white','border-b','dark:bg-gray-800','dark:border-gray-700','hover:bg-gray-50', 'dark:hover:bg-gray-600'];
+                rowClasses.forEach(function (item) {
+                    tableRow.classList.add(item);
+                })
 
-                    tdClasses = ['px-6','py-4','text-base','text-black'];
-                    tdClasses.forEach(function (item) {
-                        address.classList.add(item);
-                    })
+                address.className = 'addresses';
 
-                    address.innerHTML = item.title;
-                    items[i].appendChild(tableRow).appendChild(address);
-                });
-            }
+                let tdClasses = ['px-6','py-4','text-base','text-black'];
+                tdClasses.forEach(function (item) {
+                    address.classList.add(item);
+                })
+
+                address.innerHTML = item.title;
+                itemContainer.appendChild(tableRow).appendChild(address);
+            });
         }
     </script>
+
     <div style="display: flex; flex-direction: row; justify-content: center">
         <div style="border: solid black; padding: 2em; width: 50%">
             <table class="table-striped w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -78,7 +71,7 @@
                         Addresses
                     </th>
                 </thead>
-                <tbody class="entry-content">
+                <tbody id="entry-content">
 
                 </tbody>
             </table>

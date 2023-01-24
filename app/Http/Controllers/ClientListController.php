@@ -10,7 +10,7 @@ class ClientListController extends Controller
     public function index()
     {
         return view('delivery-information.client-list', [
-            'clients' => Client::all()->toQuery()->orderBy('name')->paginate(50),
+            'clients' => Client::all()->toQuery()->orderBy('name')->paginate(20),
         ]);
     }
 

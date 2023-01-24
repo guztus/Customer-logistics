@@ -24,7 +24,7 @@ class ClientDeliveriesController extends Controller
             )
             ->groupBy('addresses.title','routes.date','deliveries.id','deliveries.status')
             ->where('clients.id', request('id'))
-            ->paginate(50);
+            ->paginate(20);
 
         return view('delivery-information.client-deliveries', [
             'client' => $client,

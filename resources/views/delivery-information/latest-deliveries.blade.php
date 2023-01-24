@@ -21,7 +21,7 @@
                             {{ $delivery->item }}
                         </td>
                         <td class="px-6 py-4 text-base text-black">
-                            {{ $delivery->price_sum }}
+                            {{ $delivery->QTY * $delivery->price }}
                         </td>
                     </tr>
                 @endforeach

@@ -3,7 +3,7 @@
 use App\Http\Controllers\ClientDeliveriesController;
 use App\Http\Controllers\ClientListController;
 use App\Http\Controllers\DeliveryTypesController;
-use App\Http\Controllers\InactiveUsersController;
+use App\Http\Controllers\InactiveClientsController;
 use App\Http\Controllers\LatestDeliveriesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -33,15 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/', [ClientListController::class, 'index'])->name('client-list');
 Route::get('/client-list', [ClientListController::class, 'index'])->name('client-list');
-
 Route::get('/client-deliveries/{id}', [ClientDeliveriesController::class, 'index'])->name('client-deliveries');
 
 Route::get('/delivery-types', [DeliveryTypesController::class, 'index'])->name('delivery-types');
 
 Route::get('/latest-deliveries', [LatestDeliveriesController::class, 'index'])->name('latest-deliveries');
 
-Route::get('/inactive-clients', [InactiveUsersController::class, 'index'])->name('inactive-clients');
+Route::get('/inactive-clients', [InactiveClientsController::class, 'index'])->name('inactive-clients');
 
 Route::get('/list-address/{id}', [ClientListController::class, 'listAddress'])->name('list-address');
 

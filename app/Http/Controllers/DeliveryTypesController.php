@@ -18,10 +18,11 @@ class DeliveryTypesController extends Controller
                     ->groupBy('address_id')
                     ->havingRaw('count(distinct type) = 2');
             })
-            ->paginate(50);
+            ->groupBy('clients.name', 'addresses.title')
+            ->paginate(20);
 
         return view('delivery-information.delivery-types', [
-            'deliveries' => $deliveries->unique('title')
+            'deliveries' => $deliveries
         ]);
     }
 }
