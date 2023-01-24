@@ -1,4 +1,4 @@
-# FTX-Noob - crypto trading platform
+# Client list for a company
 
 ## Table of contents
 
