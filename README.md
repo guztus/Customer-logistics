@@ -39,6 +39,7 @@
 * Laravel v9
 * PHP 8.0
 * MySQL
+* TailwindCSS 3.1
 
 ## Setup
 
