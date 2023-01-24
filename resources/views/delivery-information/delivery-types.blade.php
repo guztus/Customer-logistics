@@ -20,6 +20,7 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="my-4">{{ $deliveries->links() }}</div>
         </div>
     </div>
 </x-app-layout>

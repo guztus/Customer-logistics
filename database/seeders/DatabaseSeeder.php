@@ -21,9 +21,31 @@ class DatabaseSeeder extends Seeder
     {
         $amount = 200;
 
-        for ($i=0; $i< $amount; $i++) {
-            $this->presetClient4(); // random data
+        $clients = Client::factory($amount)->create();
+        $addresses = Address::factory($amount)->create();
+        $routes = Route::factory($amount)->create();
+        $deliveries = Delivery::factory($amount)->create();
+        $deliveryLines = DeliveryLine::factory($amount)->create();
+
+        foreach ($clients as $client) {
+            $client->addresses()->saveMany($addresses->random(5));
         }
+
+        foreach ($deliveries as $delivery) {
+            $delivery->deliveryLines()->saveMany($deliveryLines->random(5));
+
+        }
+
+        foreach ($routes as $route) {
+            $route->deliveries()->saveMany($deliveries->random(5));
+        }
+
+
+
+
+//        for ($i=0; $i< $amount; $i++) {
+//            $this->presetClient4(); // random data
+//        }
 
         $this->presetClient1(); // 1x LIQUID and NOT delivered  &  1x SOLID and NOT delivered
         $this->presetClient2(); // 1x LIQUID DELIVERED

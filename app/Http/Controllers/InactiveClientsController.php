@@ -20,33 +20,16 @@ class InactiveClientsController extends Controller
 
         $result = [];
         $blacklist = [];
-
         foreach ($clients as $client) {
             if ($client->deliveryType == 1 && $client->deliveryStatus == 2) {
                 $blacklist [] = $client->id;
             }
         }
-
         foreach ($clients as $client) {
             if (!in_array($client->id, $blacklist) && !array_key_exists($client->id, $result)) {
                 $result [$client->id] = $client;
             }
         }
-
-
-//                $deliveries = DB::table('clients')
-//            ->join('addresses', 'clients.id', '=', 'addresses.client_id')
-//            ->join('deliveries', 'addresses.id', '=', 'deliveries.address_id')
-//            ->select('clients.name','addresses.title')
-//            ->where('deliveries.type', '=', '1')
-//            ->where('deliveries.status', '!=', '2')
-//
-////            ->orWhere('deliveries.type', '!=', '1')
-//
-////            ->where('deliveries.status', '=', '1')
-//
-//            ->groupBy('clients.name', 'addresses.title')
-//            ->paginate(20);
 
         return view('delivery-information.inactive-clients', [
             'deliveries' => $this->paginate($result)
