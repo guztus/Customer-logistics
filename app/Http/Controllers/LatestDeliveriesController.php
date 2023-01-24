@@ -13,8 +13,10 @@ class LatestDeliveriesController extends Controller
             ->join('addresses', 'deliveries.address_id', '=', 'addresses.id')
             ->join('clients', 'addresses.client_id', '=', 'clients.id')
             ->join('delivery_lines', 'deliveries.id', '=', 'delivery_lines.delivery_id')
-            ->select('clients.name','addresses.title','delivery_lines.item', 'delivery_lines.price', 'delivery_lines.QTY')
-            ->groupBy('clients.name','addresses.title','delivery_lines.item', 'delivery_lines.price', 'delivery_lines.QTY')
+            ->join('routes', 'deliveries.route_id', '=', 'routes.id')
+            ->select('clients.name','addresses.title','delivery_lines.item', 'delivery_lines.price', 'delivery_lines.QTY', 'routes.date')
+            ->groupBy('clients.name','addresses.title','delivery_lines.item', 'delivery_lines.price', 'delivery_lines.QTY', 'routes.date')
+            ->orderBy('routes.date', 'desc')
             ->paginate(20);
 
         return view('delivery-information.latest-deliveries', [
