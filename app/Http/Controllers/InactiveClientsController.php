@@ -40,6 +40,8 @@ class InactiveClientsController extends Controller
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        $paginator = (new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options));
+        $paginator->setPath(url()->current());
+        return $paginator;
     }
 }
