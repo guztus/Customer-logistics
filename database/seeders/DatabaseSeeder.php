@@ -12,11 +12,6 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
         $amount = 200;
@@ -39,13 +34,6 @@ class DatabaseSeeder extends Seeder
         foreach ($routes as $route) {
             $route->deliveries()->saveMany($deliveries->random(5));
         }
-
-
-
-
-//        for ($i=0; $i< $amount; $i++) {
-//            $this->presetClient4(); // random data
-//        }
 
         $this->presetClient1(); // 1x LIQUID and NOT delivered  &  1x SOLID and NOT delivered
         $this->presetClient2(); // 1x LIQUID DELIVERED
