@@ -1,61 +1,49 @@
 <x-app-layout>
     <script>
-        // function dataD() {
-        //     return {
-        //         dato1: '',
-        //         axiosResponse: '',
-        //         ok: false,
-        //
-        //         inviaValoriCheckBox(val, servizio){
-        //             axios.get( 'https://reqres.in/api/unknown/2')
-        //                 .then( (r)=>{
-        //                     console.log(r.data.data);
-        //                     this.ok = true;
-        //                     this.axiosResponse = r.data.data.name;
-        //                     allmydata = r.data.data.name;
-        //                     setTimeout(() => {
-        //                         this.ok = false;
-        //                     }, 5000);
-        //
-        //                 }).catch( (e)=>{
-        //                 console.log(e);
-        //             })
-        //         },
-        //         mounted(){
-        //             console.log('mounted');
-        //         }
-        //     }
-        // }
-
         function getAddress(id) {
-            // return {}
             axios.get("/list-address/" + id)
                 .then( (res) => {
-                    console.log(res.data)
-                    allmydata = res.data;
-                    users = res.data;
+                    addressList = res.data;
+                    generateDivs();
                 }) // Logs result object
                 .catch(err => console.log(err)) // Logs error
         }
 
-        let allmydata;
+        let addressList;
 
-        function dataResponse() {
-            return allmydata ?? null;
+        function replaceChilden() {
+            let items = document.getElementsByClassName('addresses');
+            for (let i = items.length - 1; i >= 0; --i) {
+                items[i].remove();
+            }
         }
 
-        let users = [
-            { id: 1, name: 'John Doe' },
-            { id: 2, name: 'Jane Smith' },
-            { id: 3, name: 'Bob Johnson' },
-        ]
+        function generateDivs() {
+            let items = document.getElementsByClassName('entry-content'), address, tableRow, rowClasses, tdClasses
+            replaceChilden();
+            for (let i = 0; i < items.length; i++) {
+                addressList.forEach(function (item) {
+                    tableRow = document.createElement('tr');
+                    address = document.createElement('td');
 
-        console.log(users)
+                    rowClasses = ['bg-white','border-b','dark:bg-gray-800','dark:border-gray-700','hover:bg-gray-50', 'dark:hover:bg-gray-600'];
+                    rowClasses.forEach(function (item) {
+                        tableRow.classList.add(item);
+                    })
+
+                    address.className = 'addresses';
+
+                    tdClasses = ['px-6','py-4','text-base','text-black'];
+                    tdClasses.forEach(function (item) {
+                        address.classList.add(item);
+                    })
+
+                    address.innerHTML = item.title;
+                    items[i].appendChild(tableRow).appendChild(address);
+                });
+            }
+        }
     </script>
-    <form>
-        <input type="text" name="client_id">
-        <input type="submit" value="Submit">
-    </form>
     <div style="display: flex; flex-direction: row; justify-content: center">
         <div style="border: solid black; padding: 2em; width: 50%">
             <table class="table-striped w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -84,37 +72,16 @@
             {{ $clients->links() }}
         </div>
         <div style="border: solid black; padding: 2em; width: 50%">
-            <div id="clientAddressList">test</div>
+            <table class="table-striped w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <th class="px-6 py-3">
+                        Addresses
+                    </th>
+                </thead>
+                <tbody class="entry-content">
 
-{{--            <div x-data="dataResponse()" class="mt-16 xxl:mt-0 xxl:ml-auto">--}}
-
-{{--                <div class="mt-4">--}}
-{{--                    <label><input x-model="dato1" x-bind:checked="dato1" @click="inviaValoriCheckBox(dato1)"  type="checkbox" class="border border-1">--}}
-{{--                        axios get https://reqres.in/api/unknown/2--}}
-{{--                    </label>--}}
-{{--                </div>--}}
-{{--                <template x-for="post in posts">--}}
-{{--                    <h2 x-text="post.title"></h2>--}}
-{{--                </template>--}}
-
-{{--                <p x-show.transition="allmydata" x-text="allmydata"></p>--}}
-{{--            </div>--}}
-{{--            <div x-data="dataResponse()">--}}
-{{--                <template x-for="a in data">--}}
-{{--                    <h2 x-text="a.title"></h2>--}}
-{{--                </template>--}}
-{{--            </div>--}}
-
-{{--            <ul>--}}
-{{--                <li x-for="user in users" :key="user.id">--}}
-{{--                    <h2 x-text="user.name ? user.name : 'N/A'"></h2>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-            <ul x-data="users">
-                <template x-for="number in users">
-                    <th x-text="number.name"></th>
-                </template>
-            </ul>
+                </tbody>
+            </table>
         </div>
     </div>
 </x-app-layout>
